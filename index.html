@@ -5,17 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enter Your Registration Number</title>
     <style>
-        /* Ảnh nền mặc định cho PC */
-        body {
-            font-family: Arial, sans-serif;
+        /* Reset mặc định */
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body */
+        body {
+            font-family: Arial, sans-serif;
             background: url('https://raw.githubusercontent.com/quan-gn/satdirection/main/pcbackground.jpg') no-repeat center center;
             background-size: cover;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
         }
 
         /* Khi màn hình nhỏ hơn 768px (Mobile), đổi ảnh nền */
@@ -26,54 +31,65 @@
             }
         }
 
-        /* Container của ô nhập số báo danh */
+        /* Container chính giữa */
         .container {
             background: rgba(255, 255, 255, 0.9);
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             text-align: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 400px;
+        }
+
+        h2 {
+            margin-bottom: 15px;
+            font-size: 22px;
         }
 
         input {
+            width: 100%;
             padding: 10px;
-            font-size: 16px;
-            margin-top: 10px;
+            font-size: 18px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
 
         button {
-            padding: 10px 20px;
-            font-size: 16px;
-            margin-top: 10px;
-            background-color: #007bff;
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+            background-color: #28a745;
             color: white;
             border: none;
+            border-radius: 5px;
             cursor: pointer;
         }
 
         button:hover {
-            background-color: #0056b3;
+            background-color: #218838;
         }
     </style>
 </head>
 <body>
+
     <div class="container">
-        <h2>Enter Your Registration Number</h2>
-        <input type="text" id="regNumber" placeholder="Enter number...">
-        <button onclick="submitForm()">Submit</button>
+        <h2>Nhập số báo danh</h2>
+        <input type="text" id="registrationNumber" placeholder="Nhập số báo danh">
+        <button onclick="submitNumber()">Gửi</button>
     </div>
 
     <script>
-        function submitForm() {
-            let regNumber = document.getElementById("regNumber").value;
-            if (regNumber.trim() === "") {
-                alert("Please enter a registration number.");
-                return;
+        function submitNumber() {
+            var regNumber = document.getElementById("registrationNumber").value;
+            if (regNumber) {
+                window.location.href = "https://example.com/" + regNumber; // Thay đổi URL này theo nhu cầu của bạn
+            } else {
+                alert("Vui lòng nhập số báo danh!");
             }
-
-            // Chuyển hướng đến trang phù hợp với số báo danh
-            window.location.href = "https://yourwebsite.com/exam-room/" + regNumber;
         }
     </script>
+
 </body>
 </html>
