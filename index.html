@@ -5,22 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enter Your Registration Number</title>
     <style>
-        /* Reset mặc định */
-        * {
+        /* Ảnh nền mặc định cho PC */
+        body {
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
-        /* Ảnh nền cho PC */
-        body {
             background: url('https://i.imgur.com/fdaQhDt.jpg') no-repeat center center;
             background-size: cover;
-            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            height: 100vh;
         }
 
         /* Khi màn hình nhỏ hơn 768px (Mobile), đổi ảnh nền */
@@ -48,56 +43,48 @@
             width: 100%;
             padding: 10px;
             font-size: 18px;
-            margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
             text-align: center;
         }
 
         button {
-            width: 100%;
-            padding: 10px;
+            margin-top: 10px;
+            padding: 10px 20px;
             font-size: 18px;
             color: white;
-            background-color: #007bff;
+            background: #007bff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
 
         button:hover {
-            background-color: #0056b3;
+            background: #0056b3;
         }
     </style>
     <script>
         function checkSBD() {
             var sbd = document.getElementById("sbd").value;
-
-            // Giới hạn chỉ cho nhập đúng 10 chữ số
-            if (sbd.length !== 10 || isNaN(sbd)) {
-                alert("Số báo danh phải có đúng 10 chữ số!");
-                return;
-            }
-
             var roomLinks = {
-                "1000000001": "https://sites.google.com/view/ttpnd1r1/trang-ch%E1%BB%A7",
-                "1000000002": "https://sites.google.com/view/ttpnd1r1/trang-ch%E1%BB%A7",
-                "1000000003": "https://example.com/phong3"
+                "1001": "https://sites.google.com/view/ttpnd1r1/trang-ch%E1%BB%A7",
+                "1002": "https://sites.google.com/view/ttpnd1r1/trang-ch%E1%BB%A7",
+                "1003": "https://example.com/phong3"
             };
 
             if (roomLinks[sbd]) {
                 window.location.href = roomLinks[sbd]; 
             } else {
-                alert("Số báo danh không hợp lệ!");
+                alert("Your registration number is invalid");
             }
         }
     </script>
 </head>
 <body>
     <div class="container">
-        <h2>Nhập số báo danh</h2>
-        <input type="number" id="sbd" placeholder="Nhập số báo danh" maxlength="10">
-        <button onclick="checkSBD()">Xác nhận</button>
+        <h2>Enter Your Registration Number</h2>
+        <input type="number" id="sbd" placeholder="Enter Registration Number" maxlength="10">
+        <button onclick="checkSBD()">Submit</button>
     </div>
 </body>
 </html>
