@@ -5,14 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enter Your Registration Number</title>
     <style>
-        /* Background cho PC */
+        /* Ảnh nền mặc định cho PC */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: url('https://raw.githubusercontent.com/quan-gn/satdirection/main/460210762_981181313814689_2001088258278020552_n%20(1).jpg') no-repeat center center;
+            background: url('https://raw.githubusercontent.com/quan-gn/satdirection/main/pcbackground.jpg') no-repeat center center;
             background-size: cover;
-            background-attachment: fixed;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -22,71 +21,59 @@
         /* Khi màn hình nhỏ hơn 768px (Mobile), đổi ảnh nền */
         @media (max-width: 768px) {
             body {
-                background: url('https://raw.githubusercontent.com/quan-gn/satdirection/main/Pop-up_mobile.png') no-repeat center center;
+                background: url('https://raw.githubusercontent.com/quan-gn/satdirection/main/mobile.png') no-repeat center center;
                 background-size: cover;
-                background-attachment: fixed;
             }
         }
 
-        /* Container của ô nhập số */
+        /* Container của ô nhập số báo danh */
         .container {
             background: rgba(255, 255, 255, 0.9);
             padding: 20px;
             border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             text-align: center;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        h2 {
-            margin-bottom: 15px;
         }
 
         input {
-            width: 100%;
             padding: 10px;
-            font-size: 18px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            text-align: center;
+            font-size: 16px;
+            margin-top: 10px;
         }
 
         button {
-            margin-top: 10px;
             padding: 10px 20px;
-            font-size: 18px;
+            font-size: 16px;
+            margin-top: 10px;
+            background-color: #007bff;
             color: white;
-            background: #007bff;
             border: none;
-            border-radius: 5px;
             cursor: pointer;
         }
 
         button:hover {
-            background: #0056b3;
+            background-color: #0056b3;
         }
     </style>
-    <script>
-        function checkSBD() {
-            var sbd = document.getElementById("sbd").value;
-            var roomLinks = {
-                "1001": "https://sites.google.com/view/ttpnd1r1/trang-ch%E1%BB%A7",
-                "1002": "https://sites.google.com/view/ttpnd1r1/trang-ch%E1%BB%A7",
-                "1003": "https://example.com/phong3"
-            };
-
-            if (roomLinks[sbd]) {
-                window.location.href = roomLinks[sbd]; 
-            } else {
-                alert("Your registration number is invalid");
-            }
-        }
-    </script>
 </head>
 <body>
     <div class="container">
         <h2>Enter Your Registration Number</h2>
-        <input type="number" id="sbd" placeholder="Enter Registration Number" maxlength="10">
-        <button onclick="checkSBD()">Submit</button>
+        <input type="text" id="regNumber" placeholder="Enter number...">
+        <button onclick="submitForm()">Submit</button>
     </div>
+
+    <script>
+        function submitForm() {
+            let regNumber = document.getElementById("regNumber").value;
+            if (regNumber.trim() === "") {
+                alert("Please enter a registration number.");
+                return;
+            }
+
+            // Chuyển hướng đến trang phù hợp với số báo danh
+            window.location.href = "https://yourwebsite.com/exam-room/" + regNumber;
+        }
+    </script>
 </body>
 </html>
