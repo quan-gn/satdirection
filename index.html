@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enter Your Registration Number</title>
+    <title>Nhập Số Báo Danh</title>
     <style>
         /* Reset mặc định */
         * {
@@ -83,10 +83,15 @@
     <script>
         function submitNumber() {
             var regNumber = document.getElementById("registrationNumber").value;
-            if (regNumber) {
-                window.location.href = "https://example.com/" + regNumber; // Thay đổi URL này theo nhu cầu của bạn
+            var roomLinks = {
+                "1001": "https://sites.google.com/view/ttpnd1r1/trang-chủ",
+                "1002": "https://sites.google.com/view/ttpnd2r1/trang-chủ"
+            };
+
+            if (roomLinks[regNumber]) {
+                window.location.href = roomLinks[regNumber];  
             } else {
-                alert("Vui lòng nhập số báo danh!");
+                alert("Số báo danh không hợp lệ!");
             }
         }
     </script>
