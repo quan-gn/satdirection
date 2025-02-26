@@ -12,7 +12,7 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
             background: url('https://raw.githubusercontent.com/quan-gn/satdirection/main/pcbackground.jpg') no-repeat center center;
             background-size: cover;
             height: 100vh;
@@ -35,16 +35,16 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
             z-index: -1;
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 20px;
-            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.97);
+            padding: 25px;
+            border-radius: 12px;
             text-align: center;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
             width: 90%;
             max-width: 400px;
             position: relative;
@@ -52,36 +52,36 @@
         }
 
         .logo {
-            width: 100px;
-            margin-bottom: 15px;
+            width: 120px;
             position: absolute;
-            top: 10px;
-            left: 10px;
+            top: 15px;
+            left: 15px;
         }
 
         h2 {
             margin-bottom: 15px;
-            font-size: 22px;
+            font-size: 24px;
         }
 
         input {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             font-size: 18px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             border: 1px solid #ccc;
-            border-radius: 5px;
+            border-radius: 6px;
         }
 
         button {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             font-size: 18px;
             background-color: #28a745;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
+            transition: background 0.3s ease-in-out;
         }
 
         button:hover {
@@ -96,13 +96,13 @@
             left: 50%;
             transform: translate(-50%, -50%) scale(0.8);
             background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
             text-align: center;
             z-index: 1000;
             opacity: 0;
-            transition: all 0.3s ease-out;
+            transition: all 0.4s ease-out;
         }
 
         .popup.active {
@@ -111,7 +111,7 @@
         }
 
         .popup button {
-            margin-top: 10px;
+            margin-top: 12px;
             background-color: #dc3545;
         }
 
@@ -122,7 +122,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.7);
             z-index: 999;
         }
     </style>
@@ -132,7 +132,7 @@
     <img src="/mnt/data/Logo IIG.png" alt="Logo" class="logo">
     <div class="container">
         <h2>Enter Your Registration Number</h2>
-        <input type="text" id="registrationNumber" placeholder="">
+        <input type="text" id="registrationNumber" autofocus>
         <button onclick="submitNumber()">Submit</button>
     </div>
 
@@ -167,7 +167,7 @@
             setTimeout(() => {
                 document.getElementById("popup").style.display = "none";
                 document.getElementById("overlay").style.display = "none";
-            }, 300);
+            }, 400);
         }
     </script>
 </body>
