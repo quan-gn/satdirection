@@ -102,9 +102,9 @@
 <body>
 
     <div class="container">
-        <h2>Nhập số báo danh</h2>
-        <input type="text" id="registrationNumber" placeholder="Nhập số báo danh">
-        <button onclick="submitNumber()">Gửi</button>
+        <h2>Enter Your Registration Number</h2>
+        <input type="text" id="registrationNumber" placeholder="Enter your registration number">
+        <button onclick="submitNumber()">Submit</button>
     </div>
 
     <div class="overlay" id="overlay"></div>
@@ -114,10 +114,14 @@
     </div>
 
     <script>
+        const validNumbers = {
+            "12345": "https://sites.google.com/view/ttpnd2r1/"
+        };
+
         function submitNumber() {
             var regNumber = document.getElementById("registrationNumber").value.trim();
-            if (regNumber) {
-                window.location.href = "https://example.com/" + regNumber;
+            if (validNumbers[regNumber]) {
+                window.location.href = validNumbers[regNumber];
             } else {
                 showPopup();
             }
