@@ -1,174 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enter Your Registration Number</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+import React, { useState, useEffect } from "react";
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: url('https://raw.githubusercontent.com/quan-gn/satdirection/main/pcbackground.jpg') no-repeat center center;
-            background-size: cover;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
+const TEST_INFO = {
+  testDate: "08-Mar-25",
+  testLocation: "Center for Women and Development",
+  mapLink: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.8568234621486..."
+};
 
-        @media (max-width: 768px) {
-            body {
-                background: url('https://raw.githubusercontent.com/quan-gn/satdirection/main/mobile.png') no-repeat center center;
-                background-size: cover;
-            }
-        }
+const CandidateLookup = () => {
+  const [regNumber, setRegNumber] = useState("");
+  const [candidate, setCandidate] = useState(null);
+  const [error, setError] = useState("");
+  const [candidateData, setCandidateData] = useState([]);
 
-        .overlay-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            z-index: -1;
-        }
+  // Load JSON từ file
+  useEffect(() => {
+    fetch("/candidate_data.json") // Đảm bảo file JSON nằm trong thư mục public
+      .then((response) => response.json())
+      .then((data) => setCandidateData(data))
+      .catch((err) => console.error("Error loading JSON:", err));
+  }, []);
 
-        .container {
-            background: rgba(255, 255, 255, 0.97);
-            padding: 25px;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
-            width: 90%;
-            max-width: 400px;
-            position: relative;
-            z-index: 1;
-        }
+  const handleSearch = () => {
+    const found = candidateData.find((c) => c.registrationNumber === regNumber);
+    if (found) {
+      setCandidate(found);
+      setError("");
+    } else {
+      setCandidate(null);
+      setError("Invalid registration number");
+    }
+  };
 
-        .logo {
-            width: 120px;
-            position: absolute;
-            top: 15px;
-            left: 15px;
-        }
-
-        h2 {
-            margin-bottom: 15px;
-            font-size: 24px;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            font-size: 18px;
-            margin-bottom: 12px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            font-size: 18px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background 0.3s ease-in-out;
-        }
-
-        button:hover {
-            background-color: #218838;
-        }
-
-        /* Popup styling with animation */
-        .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.8);
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            z-index: 1000;
-            opacity: 0;
-            transition: all 0.4s ease-out;
-        }
-
-        .popup.active {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        .popup button {
-            margin-top: 12px;
-            background-color: #dc3545;
-        }
-
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 999;
-        }
-    </style>
-</head>
-<body>
-    <div class="overlay-bg"></div>
-    <img src="/mnt/data/Logo IIG.png" alt="Logo" class="logo">
-    <div class="container">
-        <h2>Enter Your Registration Number</h2>
-        <input type="text" id="registrationNumber" autofocus>
-        <button onclick="submitNumber()">Submit</button>
+  return (
+    <div className="container mx-auto p-4">
+      <h1 className="text-xl font-bold">Candidate Lookup</h1>
+      <input 
+        type="text" 
+        value={regNumber} 
+        onChange={(e) => setRegNumber(e.target.value)} 
+        placeholder="Enter registration number" 
+        className="border p-2 rounded"
+      />
+      <button onClick={handleSearch} className="bg-blue-500 text-white p-2 rounded ml-2">Search</button>
+      
+      {error && <p className="text-red-500 mt-2">{error}</p>}
+      {candidate && (
+        <div className="mt-4 border p-4 rounded bg-gray-100">
+          <p><strong>Candidate Name:</strong> {candidate.name}</p>
+          <p><strong>Registration Number:</strong> {candidate.registrationNumber}</p>
+          <p><strong>Test Date:</strong> {TEST_INFO.testDate}</p>
+          <p><strong>Test Location:</strong> {TEST_INFO.testLocation}</p>
+          <p><strong>Test Room:</strong> {candidate.testRoom}</p>
+          <iframe
+            src={TEST_INFO.mapLink}
+            width="100%" 
+            height="300"
+            style={{ border: 0 }}
+            allowFullScreen=""
+            loading="lazy"
+          ></iframe>
+        </div>
+      )}
     </div>
+  );
+};
 
-    <div class="overlay" id="overlay"></div>
-    <div class="popup" id="popup">
-        <p>Your registration number is invalid</p>
-        <button onclick="closePopup()">OK</button>
-    </div>
-
-    <script>
-        const validNumbers = {
-            "12345": "https://sites.google.com/view/ttpnd2r1/"
-        };
-
-        function submitNumber() {
-            var regNumber = document.getElementById("registrationNumber").value.trim();
-            if (validNumbers[regNumber]) {
-                window.location.href = validNumbers[regNumber];
-            } else {
-                showPopup();
-            }
-        }
-
-        function showPopup() {
-            document.getElementById("popup").classList.add("active");
-            document.getElementById("popup").style.display = "block";
-            document.getElementById("overlay").style.display = "block";
-        }
-
-        function closePopup() {
-            document.getElementById("popup").classList.remove("active");
-            setTimeout(() => {
-                document.getElementById("popup").style.display = "none";
-                document.getElementById("overlay").style.display = "none";
-            }, 400);
-        }
-    </script>
-</body>
-</html>
+export default CandidateLookup;
