@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
 
 const TEST_INFO = {
   testDate: "08-Mar-25",
@@ -6,22 +7,21 @@ const TEST_INFO = {
   mapLink: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.8568234621486..."
 };
 
+const MOCK_CANDIDATES = [
+  { registrationNumber: "12345", name: "John Doe", testRoom: "A101" },
+  { registrationNumber: "12346", name: "Jane Smith", testRoom: "B202" }
+];
+
 const CandidateLookup = () => {
   const [regNumber, setRegNumber] = useState("");
   const [candidate, setCandidate] = useState(null);
   const [error, setError] = useState("");
-  const [candidateData, setCandidateData] = useState([]);
-
-  // Load JSON từ file
-  useEffect(() => {
-    fetch("/candidate_data.json") // Đảm bảo file JSON nằm trong thư mục public
-      .then((response) => response.json())
-      .then((data) => setCandidateData(data))
-      .catch((err) => console.error("Error loading JSON:", err));
-  }, []);
 
   const handleSearch = () => {
-    const found = candidateData.find((c) => c.registrationNumber === regNumber);
+    const cleanedRegNumber = regNumber.trim();
+    const found = MOCK_CANDIDATES.find(
+      (c) => c.registrationNumber === cleanedRegNumber
+    );
     if (found) {
       setCandidate(found);
       setError("");
@@ -32,35 +32,55 @@ const CandidateLookup = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-xl font-bold">Candidate Lookup</h1>
-      <input 
-        type="text" 
-        value={regNumber} 
-        onChange={(e) => setRegNumber(e.target.value)} 
-        placeholder="Enter registration number" 
-        className="border p-2 rounded"
-      />
-      <button onClick={handleSearch} className="bg-blue-500 text-white p-2 rounded ml-2">Search</button>
-      
-      {error && <p className="text-red-500 mt-2">{error}</p>}
-      {candidate && (
-        <div className="mt-4 border p-4 rounded bg-gray-100">
-          <p><strong>Candidate Name:</strong> {candidate.name}</p>
-          <p><strong>Registration Number:</strong> {candidate.registrationNumber}</p>
-          <p><strong>Test Date:</strong> {TEST_INFO.testDate}</p>
-          <p><strong>Test Location:</strong> {TEST_INFO.testLocation}</p>
-          <p><strong>Test Room:</strong> {candidate.testRoom}</p>
-          <iframe
-            src={TEST_INFO.mapLink}
-            width="100%" 
-            height="300"
-            style={{ border: 0 }}
-            allowFullScreen=""
-            loading="lazy"
-          ></iframe>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-300 to-blue-500 p-6 md:p-12">
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.9 }} 
+        animate={{ opacity: 1, scale: 1 }} 
+        transition={{ duration: 0.5 }}
+        className="bg-white p-6 md:p-8 rounded-2xl shadow-xl w-full max-w-lg md:max-w-xl lg:max-w-2xl"
+      >
+        <h1 className="text-3xl font-extrabold text-center text-blue-700 mb-4">Registration Number</h1>
+        <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
+          <input 
+            type="text" 
+            value={regNumber} 
+            onChange={(e) => setRegNumber(e.target.value)} 
+            placeholder="Enter registration number" 
+            className="border p-3 md:p-4 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+          <motion.button 
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleSearch} 
+            className="bg-blue-500 text-white p-3 md:p-4 rounded-lg hover:bg-blue-600 transition"
+          >Search</motion.button>
         </div>
-      )}
+        {error && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-red-500 mt-2 text-center">{error}</motion.p>}
+        {candidate && (
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ duration: 0.4 }}
+            className="mt-6 border p-4 md:p-6 rounded-lg bg-gray-50 shadow-inner text-sm md:text-base"
+          >
+            <p className="text-lg text-black">Candidate Name: <strong className="text-blue-700">{candidate.name}</strong></p>
+            <p className="text-lg text-black">Registration Number: <strong className="text-blue-700">{candidate.registrationNumber}</strong></p>
+            <p className="text-lg text-black">Test Date: <strong className="text-blue-700">{TEST_INFO.testDate}</strong></p>
+            <p className="text-lg text-black">Test Location: <strong className="text-blue-700">{TEST_INFO.testLocation}</strong></p>
+            <p className="text-lg text-black">Test Room: <strong className="text-blue-700">{candidate.testRoom}</strong></p>
+            <div className="mt-4 rounded-lg overflow-hidden border">
+              <iframe
+                src={TEST_INFO.mapLink}
+                width="100%" 
+                height="300"
+                style={{ border: 0 }}
+                allowFullScreen=""
+                loading="lazy"
+              ></iframe>
+            </div>
+          </motion.div>
+        )}
+      </motion.div>
     </div>
   );
 };
